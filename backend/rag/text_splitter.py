@@ -3,7 +3,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 def split_documents(documents):
     """
-    Split LangChain Document objects into smaller chunks.
+    Split LangChain Document objects into smaller chunks.  
     """
 
     text_splitter = RecursiveCharacterTextSplitter(
@@ -15,3 +15,4 @@ def split_documents(documents):
     chunks = text_splitter.split_documents(documents)
 
     return chunks
+    

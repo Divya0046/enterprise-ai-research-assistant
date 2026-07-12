@@ -21,7 +21,13 @@ if __name__ == "__main__":
     print(f"Total Chunks: {len(chunks)}")
 
     print("\nFirst Chunk:\n")
-    print(chunks[0].page_content)
+    for i, chunk in enumerate(chunks):
+        print("=" * 60)
+        print(f"Chunk {i+1}")
+        print("=" * 60)
+        print(chunk.page_content)
+        print("\nMetadata:")
+        print(chunk.metadata)
 
     print("\nMetadata:\n")
     print(chunks[0].metadata)
