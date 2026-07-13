@@ -11,8 +11,9 @@ __pycache__/
 # VS Code
 .vscode/
 
+
 # ChromaDB
-.chroma/
+chroma_db/
 
 # OS Files
 Thumbs.db
