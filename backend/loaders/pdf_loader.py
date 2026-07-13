@@ -1,6 +1,7 @@
 from pathlib import Path
 from langchain_community.document_loaders import PyPDFLoader
 from backend.rag.text_splitter import split_documents
+from backend.vectorstore.vector_store import create_vector_store
 
 
 def load_pdf(pdf_path: str):
@@ -18,6 +19,9 @@ if __name__ == "__main__":
 
     chunks = split_documents(docs)
 
+    vector_db = create_vector_store(chunks)
+
+    print("Vector database created successfully.")
     print(f"Total Chunks: {len(chunks)}")
 
     print("\nFirst Chunk:\n")
