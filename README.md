@@ -257,13 +257,13 @@ docker run -p 8000:8000 enterprise-ai-research-assistant
 
 ## Streamlit User Interface
 
-![Streamlit UI](C:\Users\NISHTHA RAI\OneDrive\Desktop\AI Assistant project\enterprise-ai-research-assistant\assets\streamlit.png)
-![Streamlit UI](C:\Users\NISHTHA RAI\OneDrive\Desktop\AI Assistant project\enterprise-ai-research-assistant\assets\streamlit2.png)
+![Streamlit UI](assets\streamlit.png)
+![Streamlit UI](assets\streamlit2.png)
 ---
 
 ## FastAPI Swagger Documentation
 
-![Swagger API](C:\Users\NISHTHA RAI\OneDrive\Desktop\AI Assistant project\enterprise-ai-research-assistant\assets\swagger.png)
+![Swagger API](assets\swagger.png)
 
 # 👨‍💻 Author
 
