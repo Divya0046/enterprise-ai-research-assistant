@@ -1,44 +1,60 @@
 from backend.llm.gemini import get_llm
 from backend.rag.retriever import get_retriever
-from backend.prompts.prompt import RAG_PROMPT
 
-retriever = get_retriever()
-llm = get_llm()
+
 def ask_question(question: str):
 
+    retriever = get_retriever()
 
     docs = retriever.invoke(question)
-    print("\n" + "=" * 60)
-    print("Retrieved Chunks")
-    print("=" * 60)
 
-    for i, doc in enumerate(docs, start=1):
-        print(f"\nChunk {i}")
-        print("-" * 30)
-        print(doc.page_content[:400])
-    context = "\n\n".join(
-        doc.page_content
-        for doc in docs
-    )
-
-    prompt = RAG_PROMPT.format(
-    context=context,
-    question=question
-)
+    context = "\n\n".join(doc.page_content for doc in docs)
     
+    prompt = f"""
+You are an Enterprise AI Research Assistant.
+
+Use both the conversation history and the retrieved context to answer the user's question.
+
+If the answer is not available in the context, reply:
+
+"I couldn't find that information."
+
+Context:
+{context}
+
+Question:
+{question}
+
+Answer:
+"""
+
+    llm = get_llm()
 
     response = llm.invoke(prompt)
 
-    # Gemini 3.x returns structured content
     if hasattr(response, "text") and response.text:
-        return response.text
-
-    # Fallback
-    if isinstance(response.content, list):
-        return "".join(
+        answer = response.text
+    elif isinstance(response.content, list):
+        answer = "".join(
             item.get("text", "")
             for item in response.content
             if isinstance(item, dict)
         )
+    else:
+        answer = str(response.content)
 
-    return str(response.content)
+    sources = []
+
+    for doc in docs:
+
+        filename = doc.metadata.get("filename", "Unknown")
+        
+        page = doc.metadata.get("page", 0) + 1
+
+        source = f"{filename} (Page {page})"
+
+        if source not in sources:
+            sources.append(source)
+
+    
+    return answer, sources

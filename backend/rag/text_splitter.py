@@ -1,18 +1,29 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from backend.config import CHUNK_SIZE, CHUNK_OVERLAP
+from pathlib import Path
 
 
 def split_documents(documents):
-    """
-    Split LangChain Document objects into smaller chunks.  
-    """
 
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=100,
-        length_function=len,
+    splitter = RecursiveCharacterTextSplitter(
+       chunk_size=CHUNK_SIZE,
+       chunk_overlap=CHUNK_OVERLAP,
+       length_function=len,
     )
 
-    chunks = text_splitter.split_documents(documents)
+    chunks = splitter.split_documents(documents)
+
+    for i, chunk in enumerate(chunks):
+
+        chunk.metadata["chunk_id"] = i + 1
+
+        source = Path(chunk.metadata["source"]).name
+
+        chunk.metadata["document"] = source
 
     return chunks
+
+
+
+
     

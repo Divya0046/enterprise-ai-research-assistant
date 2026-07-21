@@ -13,15 +13,19 @@ def main():
         question = input("\nAsk: ")
 
         if question.lower() == "exit":
-            print("\nGoodbye!")
             break
 
-        print("\nSearching documents...")
+        print("\nSearching documents...\n")
 
-        answer = ask_question(question)
+        answer, sources = ask_question(question)
 
-        print("\nAI:\n")
+        print("Answer:\n")
         print(answer)
+
+        print("\nSources:")
+
+        for source in sources:
+            print(f"- {source}")
 
 
 if __name__ == "__main__":

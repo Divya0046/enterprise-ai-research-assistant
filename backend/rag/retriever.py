@@ -1,22 +1,26 @@
 from langchain_chroma import Chroma
+
+from backend.config import CHROMA_DB_PATH, TOP_K
 from backend.vectorstore.embeddings import get_embedding_model
+
+_retriever = None
 
 
 def get_retriever():
+    global _retriever
 
-    embedding_model = get_embedding_model()
+    if _retriever is None:
 
-    vector_store = Chroma(
-        persist_directory="./chroma_db",
-        embedding_function=embedding_model,
-    )
+        embedding_model = get_embedding_model()
 
-    retriever = vector_store.as_retriever(
-        search_type="mmr",
-        search_kwargs={
-            "k": 5,
-            "fetch_k": 10,
-        },
-    )
+        vector_store = Chroma(
+            persist_directory=CHROMA_DB_PATH,
+            embedding_function=embedding_model,
+        )
 
-    return retriever
+        _retriever = vector_store.as_retriever(
+            search_type="similarity",
+            search_kwargs={"k": TOP_K},
+        )
+
+    return _retriever

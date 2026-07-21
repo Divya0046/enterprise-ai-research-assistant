@@ -1,13 +1,17 @@
 from langchain_huggingface import HuggingFaceEmbeddings
 
+from backend.config import EMBEDDING_MODEL
+
+_embedding_model = None
+
 
 def get_embedding_model():
-    """
-    Load the Hugging Face embedding model.
-    """
+    global _embedding_model
 
-    embedding_model = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2"
-    )
+    if _embedding_model is None:
+        print("Loading embedding model...")
+        _embedding_model = HuggingFaceEmbeddings(
+            model_name=EMBEDDING_MODEL
+        )
 
-    return embedding_model
+    return _embedding_model
