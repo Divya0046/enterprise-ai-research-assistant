@@ -257,13 +257,19 @@ docker run -p 8000:8000 enterprise-ai-research-assistant
 
 ## Streamlit User Interface
 
-![Streamlit UI](assets\streamlit.png)
-![Streamlit UI](assets\streamlit2.png)
+### Upload Document
+
+![Streamlit Upload](assets/streamlit.png)
+
+### Ask Question & Response
+
+![Streamlit Response](assets/streamlit2.png)
+
 ---
 
 ## FastAPI Swagger Documentation
 
-![Swagger API](assets\swagger.png)
+![Swagger UI](assets/swagger.png)
 
 # 👨‍💻 Author
 
